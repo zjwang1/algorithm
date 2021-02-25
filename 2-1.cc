@@ -21,9 +21,9 @@ void print(Node *list1, Node *list2) {
 
 int main() {
     // 初始化一个排序，个数为10, 随机值范围为[1, 10]的单链表
-    List<true, 10, 1, 10> list1;
+    List<Node, true, 10, 1, 10> list1;
     list1.print();
-    List<true, 20, 1, 20> list2;
+    List<Node, true, 20, 1, 20> list2;
     list2.print();
     print(list1.getListHead(), list2.getListHead());
 
