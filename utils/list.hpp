@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <iostream>
 
+#include "random_vec.hpp"
+
 struct Node
 {
     Node(int v): v_(v), next_(nullptr) {}
@@ -10,30 +12,21 @@ struct Node
 };
 
 template<bool IS_SORTED = false, size_t LIST_SIZE = 1024, size_t L = 1, size_t R = 100>
-class RandomList
+class List
 {
 public:
-    RandomList()
+    List()
     {
         static_assert(LIST_SIZE >= 1, "List size must be >= 1");
-        std::random_device rd;  //Will be used to obtain a seed for the random number engine
-        std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-        std::uniform_int_distribution<> distrib(L, R);
-        std::vector<int> v;
-        for (int i = 0; i < LIST_SIZE; ++i) {
-            v.emplace_back(distrib(gen));
-        }
-        if (IS_SORTED) {
-            std::sort(v.begin(), v.end());
-        }
-        root_ = new Node(v[0]);
-        Node *tmp = root_;
-        for (int i = 1; i < LIST_SIZE - 1; ++i) {
-            Node *n = new Node(v[i]);
-            tmp -> next_ = n;
-            tmp = n;
-        }
+        RandomVector<IS_SORTED, LIST_SIZE, L, R> vec;
+        auto v = vec.getVec();
+        getListFromVec(v);
     }
+
+    List(const std::vector<int> &v) {
+        getListFromVec(v);
+    }
+    
     Node *getListHead() {
         return root_;
     }
@@ -45,7 +38,7 @@ public:
         }
         std::cout << "\n";
     }
-    ~RandomList() {
+    ~List() {
         while(root_ != nullptr) {
             Node *tmp = root_;
             root_ = root_->next_;
@@ -54,4 +47,17 @@ public:
     }
 private:
     Node *root_;
+
+    void getListFromVec(const std::vector<int> &v) {
+        if (v.size() == 0) {
+            root_ = nullptr;
+        }
+        root_ = new Node(v[0]);
+        Node *tmp = root_;
+        for (int i = 1; i <= v.size() - 1; ++i) {
+            Node *n = new Node(v[i]);
+            tmp -> next_ = n;
+            tmp = n;
+        }
+    }
 };
