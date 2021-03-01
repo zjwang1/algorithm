@@ -1,5 +1,8 @@
+#pragma once
+
 #include <random>
 #include <vector>
+#include <algorithm>
 #include <iostream>
 
 template<bool IS_SORTED = false, size_t VEC_SIZE = 1024, size_t L = 1, size_t R = 100>

@@ -1,6 +1,4 @@
 // 删除单链表倒数第k个节点
-#include <iostream>
-
 #include "utils/list.hpp"
 
 Node *deleteKNode(Node *head, int k) {

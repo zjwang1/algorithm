@@ -1,6 +1,5 @@
-#include <random>
+#pragma once
 #include <algorithm>
-#include <iostream>
 
 #include "random_vec.hpp"
 
